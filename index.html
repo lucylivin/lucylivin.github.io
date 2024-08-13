@@ -95,20 +95,6 @@
     import * as d3 from 'https://esm.sh/d3';
     import * as htl from 'https://esm.run/htl';
 
-    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRzPtzQ6vNbxRJ9DDwWec1o36ClysOuaMk2zsKiiQphZ1L5tUVKvpe_fbsU8dyvmewAoIbdolD3y5wt/pub?gid=1157602938&single=true&output=csv";
-
-    /**
-     * @typedef {Object} Favorite
-     * @property {string} Name - The name of the favorite item.
-     * @property {string} Brand - The brand of the favorite item.
-     * @property {string} Category - The category the favorite item belongs to.
-     * @property {string} Sub-Category - The sub-category the favorite item belongs to.
-     * @property {string} Price - The price of the favorite item.
-     * @property {string} Rating - The rating of the favorite item.
-     * @property {string} Link - The link to the favorite item.
-     * @property {string} Comments - Additional comments about the favorite item.
-     * @property {string} ReferralLinks - Referral links for the favorite item.
-     */
 
     const CATEGORY_ORDER = [
       "1st Cleanser",
@@ -123,6 +109,21 @@
       "Mist",
       "Lip Balm",
     ];
+
+    /**
+     * @param {Object} param0
+     * @param {string} param0.name
+     * @param {Favorite[]} param0.favorites
+     */
+    function renderCategory({ name, favorites }) {
+      return htl.html.fragment`<section>
+          <h2 id=${name}><a href="#${name}">#</a> ${name}</h2>
+          <div class="grid">
+            ${favorites.map(favorite => renderFavorite({ favorite }))}
+          </div>
+        </section>
+      `;
+    }
 
     /**
      * @param {Object} param0
@@ -143,57 +144,54 @@
     }
 
     /**
-     * @param {Object} param0
-     * @param {string} param0.name
-     * @param {Favorite[]} param0.favorites
+     * @typedef {Object} Favorite
+     * @property {string} Name - The name of the favorite item.
+     * @property {string} Brand - The brand of the favorite item.
+     * @property {string} Category - The category the favorite item belongs to.
+     * @property {string} Sub-Category - The sub-category the favorite item belongs to.
+     * @property {string} Price - The price of the favorite item.
+     * @property {string} Rating - The rating of the favorite item.
+     * @property {string} Link - The link to the favorite item.
+     * @property {string} Comments - Additional comments about the favorite item.
+     * @property {string} ReferralLinks - Referral links for the favorite item.
      */
-    function renderCategory({ name, favorites }) {
-      return htl.html.fragment`<section>
-          <h2 id=${name}><a href="#${name}">#</a> ${name}</h2>
-          <div class="grid">
-            ${favorites.map(favorite => renderFavorite({ favorite }))}
-          </div>
-        </section>
-      `;
+
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRzPtzQ6vNbxRJ9DDwWec1o36ClysOuaMk2zsKiiQphZ1L5tUVKvpe_fbsU8dyvmewAoIbdolD3y5wt/pub?gid=1157602938&single=true&output=csv";
+
+    const loadingDiv = document.getElementById('loading');
+    loadingDiv.classList.remove('hidden');
+
+    let text;
+
+    try {
+      const response = await fetch(CSV_URL);
+      text = await response.text();
+    } catch (error) {
+      console.error('Error fetching favorites:', error);
+      text = document.getElementById('fallback').textContent;
+      // report that we're using the fallback by adding an error message in the footer
+      document.querySelector('main').prepend(htl.html`<small style="color: red">Using fallback data due to error fetching favorites. Refer to <a href="http://bit.ly/lucyskincare0724">the original spreadsheet</a> for up to date data. Error message: ${error.message}</small>`);
+    } finally {
+      loadingDiv.classList.add('hidden');
     }
 
-    async function fetchFavorites() {
-      const loadingDiv = document.getElementById('loading');
-      loadingDiv.classList.remove('hidden');
 
-      let text;
+    const rejoined = text.split("\n").slice(3).join("\n");
 
-      try {
-        const response = await fetch(CSV_URL);
-        text = await response.text();
-      } catch (error) {
-        console.error('Error fetching favorites:', error);
-        text = document.getElementById('fallback').textContent;
-        // report that we're using the fallback by adding an error message in the footer
-        document.querySelector('main').prepend(htl.html`<small style="color: red">Using fallback data due to error fetching favorites. Refer to <a href="http://bit.ly/lucyskincare0724">the original spreadsheet</a> for up to date data. Error message: ${error.message}</small>`);
-      } finally {
-        loadingDiv.classList.add('hidden');
-      }
+    console.log(rejoined)
+    /** @type {Favorite[]} */
+    const favorites = d3.csvParse(rejoined);
+    /** @type {Object<string, Favorite[]>} sort by category */
+    const groups = Object.fromEntries(Object.entries(Object.groupBy(favorites, f => f.Category)).sort(([a], [b]) => CATEGORY_ORDER.indexOf(a) - CATEGORY_ORDER.indexOf(b)));
 
+    // add the links to each category to the nav
+    const ul = document.querySelector('nav ul');
+    ul.append(...Object.keys(groups).map(name => htl.html`<li><a href="#${name}">${name}</a></li>`));
 
-      const rejoined = text.split("\n").slice(3).join("\n");
+    // now add the categories to the main section
+    const main = document.querySelector('main');
+    main.append(...Object.entries(groups).map(([name, favorites]) => renderCategory({ name, favorites })));
 
-      console.log(rejoined)
-      /** @type {Favorite[]} */
-      const favorites = d3.csvParse(rejoined);
-      /** @type {Object<string, Favorite[]>} sort by category */
-      const groups = Object.fromEntries(Object.entries(Object.groupBy(favorites, f => f.Category)).sort(([a], [b]) => CATEGORY_ORDER.indexOf(a) - CATEGORY_ORDER.indexOf(b)));
-
-      // add the links to each category to the nav
-      const ul = document.querySelector('nav ul');
-      ul.append(...Object.keys(groups).map(name => htl.html`<li><a href="#${name}">${name}</a></li>`));
-
-      // now add the categories to the main section
-      const main = document.querySelector('main');
-      main.append(...Object.entries(groups).map(([name, favorites]) => renderCategory({ name, favorites })));
-    }
-
-    fetchFavorites();
   </script>
 </head>
 
