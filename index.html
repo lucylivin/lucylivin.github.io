@@ -48,6 +48,7 @@
       border: 17px solid transparent;
       border-image: url("img/whitelace2.png") 17 round;
       border-image-outset: 17px;
+      background: radial-gradient(#fff5fa, #fff5fa, #FFF9FC, #FFF9FC, white 70%);      ;
     }
 
     ::selection{
@@ -83,6 +84,23 @@
       background-color: #ffdca5bc;
     }
 
+    .favorite .cols {
+      display: flex;
+      gap: 1em;
+      /* direction row */
+      flex-direction: row;
+    }
+
+    .favorite img {
+      display: inline;
+      object-fit: cover;
+      width: 100px;
+      height: 100%;
+      background-color: white;
+      border: 1px solid hotpink;
+      border-radius: 5px;
+    }
+
     .loading {
       font-size: 1.5em;
       text-align: center;
@@ -90,6 +108,11 @@
 
     .hidden {
       display: none;
+    }
+
+    p {
+      margin: 0;
+      margin-bottom: 0.5em
     }
   </style>
   <script type="module">
@@ -139,8 +162,13 @@
               ${favorite.Name} - <i>${favorite.Brand}</i>
             </a>
           </p>
-          <p>${favorite.Comments}</p>
-          <small>${favorite.Price} ∙ ${favorite.Rating}</small>
+          <div class="cols">
+            ${favorite["Photo Links"] && htl.html`<img src=${favorite["Photo Links"]} alt=${favorite.Name} />`}
+            <div>
+              <p>${favorite.Comments}</p>
+              <small>${favorite.Price} ∙ ${favorite.Rating}</small>
+            </div>
+          </div>
         </div>
       </article>
       `;
@@ -156,7 +184,8 @@
      * @property {string} Rating - The rating of the favorite item.
      * @property {string} Link - The link to the favorite item.
      * @property {string} Comments - Additional comments about the favorite item.
-     * @property {string} ReferralLinks - Referral links for the favorite item.
+     * @property {string} "Referral Links" - Referral links for the favorite item.
+     * @property {string} "Photo Links" - Photo links for the favorite item.
      */
 
     const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRzPtzQ6vNbxRJ9DDwWec1o36ClysOuaMk2zsKiiQphZ1L5tUVKvpe_fbsU8dyvmewAoIbdolD3y5wt/pub?gid=1157602938&single=true&output=csv";
@@ -178,10 +207,8 @@
       loadingDiv.classList.add('hidden');
     }
 
-
     const rejoined = text.split("\n").slice(3).join("\n");
 
-    console.log(rejoined)
     /** @type {Favorite[]} */
     const favorites = d3.csvParse(rejoined);
     /** @type {Object<string, Favorite[]>} sort by category */
