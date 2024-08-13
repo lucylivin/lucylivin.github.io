@@ -23,6 +23,14 @@
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+    :root{
+      --dpink: hotpink;
+      --pink: #fdb6d9;
+      --lpink: #ffe1f1;
+      --brightpink: hotpink;
+      --biscuit: #FFDCA5;
+    }
     
     html {
       background-image: url("img/w-clothcake.gif");
@@ -36,38 +44,38 @@
       margin: 1em auto;
       padding: 0 1em;
       max-width: 100ch;
-
       border-width: 7px;
       border-style: solid;
       border-image: url("img/fo32-008-a.gif") 7 fill round;
     }
 
+    ::selection{
+      background: var(--brightpink);
+      color: white;
+    }
+
+    a:hover {
+      background-color: var( --brightpink);
+      color: white;
+      text-decoration: none;
+    }
+
     a { 
-      /* a nice pastel pink */
-      color: #d01cc1;
+      color: var(--dpink);
     }
 
     main, header, footer {
-      background-color: #FFDCA5;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      font-family: 'Montserrat'
+      background-color: var(--biscuit)
     }
 
     .grid {
       display: grid;
-      gap: 2rem;
+      gap: 1rem;
       grid-template-columns: repeat(auto-fit, minmax(33ch, 1fr));
     }
 
     .favorite {
-      padding: 1rem;
+      margin: 12px;
       background-color: white;
       border: 17px solid transparent;
       border-image: url("img/whitelace.png") 17 round;
