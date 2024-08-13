@@ -42,11 +42,12 @@
       font-family: 'Lexend', sans-serif;
       color: #363029;
       margin: 1em auto;
+      background-color: white;
       padding: 0 1em;
       max-width: 100ch;
-      border-width: 7px;
-      border-style: solid;
-      border-image: url("img/fo32-008-a.gif") 7 fill round;
+      border: 17px solid transparent;
+      border-image: url("img/whitelace2.png") 17 round;
+      border-image-outset: 17px;
     }
 
     ::selection{
@@ -64,10 +65,6 @@
       color: var(--dpink);
     }
 
-    main, header, footer {
-      background-color: var(--biscuit)
-    }
-
     .grid {
       display: grid;
       gap: 1rem;
@@ -76,10 +73,14 @@
 
     .favorite {
       margin: 12px;
-      background-color: white;
-      border: 17px solid transparent;
-      border-image: url("img/whitelace.png") 17 round;
+      border-width: 7px;
+      border-style: solid;
       border-image-outset: 17px;
+      border-image: url("img/fo32-008-a.gif") 7 fill round;
+    }
+
+    .favorite > .inner {
+      background-color: var(--biscuit);
     }
 
     .loading {
@@ -131,14 +132,16 @@
      */
     function renderFavorite({ favorite }) {
       return htl.html.fragment`<article class="favorite">
-        <small>${favorite.Category} - ${favorite["Sub-Category"]}</small>
-        <p>
-          <a href=${favorite["Referral Links"]}>
-            ${favorite.Name} - <i>${favorite.Brand}</i>
-          </a>
-        </p>
-        <p>${favorite.Comments}</p>
-        <small>${favorite.Price} ∙ ${favorite.Rating}</small>
+        <div class="inner">
+          <small>${favorite.Category} - ${favorite["Sub-Category"]}</small>
+          <p>
+            <a href=${favorite["Referral Links"]}>
+              ${favorite.Name} - <i>${favorite.Brand}</i>
+            </a>
+          </p>
+          <p>${favorite.Comments}</p>
+          <small>${favorite.Price} ∙ ${favorite.Rating}</small>
+        </div>
       </article>
       `;
     }
