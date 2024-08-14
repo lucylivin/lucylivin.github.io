@@ -40,8 +40,9 @@
     body {
       cursor: url(https://maxbo.me/cursors/cursors/c_9393.png), auto;
       font-family: 'Lexend', sans-serif;
+      /* font-family : 'ヒラギノ角ゴ ProN' , 'Hiragino Kaku Gothic ProN' , '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo , 'ＭＳ ゴシック' , 'MS Gothic' , HiraKakuProN-W3 , 'TakaoExゴシック' , TakaoExGothic , 'MotoyaLCedar' , 'Droid Sans Japanese' , sans-serif; */
       color: #363029;
-      margin: 1em auto;
+      margin: 3em auto;
       background-color: white;
       padding: 0 1em;
       max-width: 100ch;
@@ -212,15 +213,15 @@
     /** @type {Favorite[]} */
     const favorites = d3.csvParse(rejoined);
     /** @type {Object<string, Favorite[]>} sort by category */
-    const groups = Object.fromEntries(Object.entries(Object.groupBy(favorites, f => f.Category)).sort(([a], [b]) => CATEGORY_ORDER.indexOf(a) - CATEGORY_ORDER.indexOf(b)));
+    const categories = Object.fromEntries(Object.entries(Object.groupBy(favorites, f => f.Category)).sort(([a], [b]) => CATEGORY_ORDER.indexOf(a) - CATEGORY_ORDER.indexOf(b)));
 
     // add the links to each category to the nav
     const ul = document.querySelector('nav ul');
-    ul.append(...Object.keys(groups).map(name => htl.html`<li><a href="#${name}">${name}</a></li>`));
+    ul.append(...Object.keys(categories).map(name => htl.html`<li><a href="#${name}">${name}</a></li>`));
 
     // now add the categories to the main section
     const main = document.querySelector('main');
-    main.append(...Object.entries(groups).map(([name, favorites]) => renderCategory({ name, favorites })));
+    main.append(...Object.entries(categories).map(([name, favorites]) => renderCategory({ name, favorites })));
 
   </script>
 </head>
