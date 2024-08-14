@@ -30,9 +30,7 @@
     }
 
     :root{
-      --dpink: hotpink;
-      --pink: #fdb6d9;
-      --lpink: #ffe1f1;
+      --darkpink: rgb(254, 60, 157);
       --brightpink: hotpink;
       --biscuit: #FFDCA5;
     }
@@ -42,10 +40,8 @@
     }
 
     h1, h2, h3 {
-      filter: drop-shadow(0px 0px 1px white) drop-shadow(0px 0px 0px white) drop-shadow(0px 0px 1px white) drop-shadow(0px 0px 0px white) drop-shadow(0px 0px 1px white) drop-shadow(0px 0px 1px white) drop-shadow(0px 1px 0px #00000032);
-      color: var(--dpink);
+      color: var(--darkpink);
     }
-
 
     body {
       cursor: url(https://maxbo.me/cursors/cursors/c_9393.png), auto;
@@ -75,7 +71,7 @@
     }
 
     a { 
-      color: var(--dpink);
+      color: var(--darkpink);
     }
 
     .grid {
@@ -93,7 +89,7 @@
     }
 
     .favorite > .inner {
-      background-color: #ffdca5bc;
+      background-color: #ffdca5d7;
     }
 
     .cols {
@@ -169,11 +165,11 @@
       return htl.html.fragment`<article class="favorite">
         <div class="inner">
           <small>${favorite.Category} - ${favorite["Sub-Category"]}</small>
-          <p>
+          <h3>
             <a href=${favorite["Referral Links"]}>
               ${favorite.Name} - <i>${favorite.Brand}</i>
             </a>
-          </p>
+          </h3>
           <div class="cols">
             ${favorite["Photo Links"] && htl.html`<img src=${favorite["Photo Links"]} alt=${favorite.Name} />`}
             <div>
