@@ -129,6 +129,17 @@
       margin: 0;
       margin-bottom: 0.5em
     }
+
+    #fontToggle {
+      position: absolute;
+      scale: 0.5;
+      top: 10px;
+      right: 10px;
+    }
+
+    .basiic-font {
+      font-family: 'basiic', serif !important;
+    }
   </style>
   <script type="module">
     import * as d3 from 'https://esm.sh/d3';
@@ -237,10 +248,22 @@
     const main = document.querySelector('main');
     main.append(...Object.entries(categories).map(([name, favorites]) => renderCategory({ name, favorites })));
 
+    document.getElementById('fontToggleInput').addEventListener('change', function (event) {
+      if (event.target.checked) {
+        document.documentElement.classList.add('basiic-font');
+      } else {
+        document.documentElement.classList.remove('basiic-font');
+      }
+    });
+
   </script>
 </head>
 
 <body>
+  <label id="fontToggle">
+    <input id="fontToggleInput" type="checkbox" />
+    Enable pixel font
+  </label>
   <header>
     <h1><img src="img/bow.gif" class="bow"/> Lucy's skincare favorites <img src="img/bow.gif" class="bow" /></h1>
    
