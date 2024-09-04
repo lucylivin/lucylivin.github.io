@@ -31,7 +31,7 @@
       src: url('fonts/basiic.ttf') format('truetype');
     }
 
-    :root{
+    :root {
       --darkpink: rgb(254, 60, 157);
       --brightpink: hotpink;
       --biscuit: #FFDCA5;
@@ -40,7 +40,7 @@
     .bow {
       width: 50px;
     }
-    
+
     html {
       background-image: url("img/grid-0001-bg.gif");
       /* font-size: 120%;
@@ -54,30 +54,34 @@
     }
 
     body {
+      padding: 2em 1em;
+      margin: 0 auto;
       cursor: url(https://maxbo.me/cursors/cursors/c_9393.png), auto;
       color: #363029;
-      margin: 3em auto;
-      background-color: white;
-      padding: 0 1em;
       max-width: 100ch;
+    }
+
+    main {
+      padding: 1em;
+      background-color: white;
       border: 17px solid transparent;
       border-image: url("img/whitelace2.png") 17 round;
       border-image-outset: 17px;
-      background: radial-gradient(#fff5fa, #fff5fa, #FFF9FC, #FFF9FC, white 70%);      ;
+      background: radial-gradient(#fff5fa, #fff5fa, #FFF9FC, #FFF9FC, white 70%);
     }
 
-    ::selection{
+    ::selection {
       background: var(--brightpink);
       color: white;
     }
 
     a:hover {
-      background-color: var( --brightpink);
+      background-color: var(--brightpink);
       color: white;
       text-decoration: none;
     }
 
-    a { 
+    a {
       color: var(--darkpink);
     }
 
@@ -95,7 +99,7 @@
       border-image: url("img/fo32-008-a.gif") 7 fill round;
     }
 
-    .favorite > .inner {
+    .favorite>.inner {
       background-color: #ffdca5d7;
     }
 
@@ -265,14 +269,13 @@
     <input id="fontToggleInput" type="checkbox" />
     Enable pixel font
   </label>
-  <header>
-    <h1><img src="img/bow.gif" class="bow"/> Lucy's skincare favorites <img src="img/bow.gif" class="bow" /></h1>
-   
-  </header>
   <main>
-      <nav>
-        <ul></ul>
-      </nav>
+    <header>
+      <h1><img src="img/bow.gif" class="bow" /> Lucy's skincare favorites <img src="img/bow.gif" class="bow" /></h1>
+    </header>
+    <nav>
+      <ul></ul>
+    </nav>
     <div id="loading">Loading ⸜(｡˃ ᵕ ˂ )⸝♡</div>
     <div style="text-align:center">
       <img src="img/tea08.gif" />
@@ -285,7 +288,8 @@
     </div>
     <small>
       c. 2024, content: <a href="https://linktr.ee/lucylivin">Lucy Livin</a>, site:
-      <a href="https://maxbo.me">Max Bo</a>, <a href="https://github.com/lucylivin/lucylivin.github.io">source</a>, <a href="https://www.are.na/max-bo/pink-u4nceful5m4">credits</a>
+      <a href="https://maxbo.me">Max Bo</a>, <a href="https://github.com/lucylivin/lucylivin.github.io">source</a>, <a
+        href="https://www.are.na/max-bo/pink-u4nceful5m4">credits</a>
     </small>
   </footer>
 </body>
