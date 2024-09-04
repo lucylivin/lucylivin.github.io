@@ -240,7 +240,7 @@
     } catch (error) {
       console.error('Error fetching favorites:', error);
       text = document.getElementById('fallback').textContent;
-      // report that we're using the fallback by adding an error message in the footer
+      // report that we're using the fallback by adding an error message in the header
       document.querySelector('main').prepend(htl.html`<small style="color: red">Using fallback data due to error fetching favorites. Refer to <a href="http://bit.ly/lucyskincare0724">the original spreadsheet</a> for up to date data. Error message: ${error.message}</small>`);
     } finally {
       loadingDiv.classList.add('hidden');
