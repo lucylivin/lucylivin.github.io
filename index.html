@@ -62,7 +62,7 @@
     }
 
     main {
-      padding: 1em;
+      padding: 0 1em;
       background-color: white;
       border: 17px solid transparent;
       border-image: url("img/whitelace2.png") 17 round;
@@ -249,9 +249,9 @@
     const ul = document.querySelector('nav ul');
     ul.append(...Object.keys(categories).map(name => htl.html`<li><a href="#${name}">${name}</a></li>`));
 
-    // now add the categories to the main section
-    const main = document.querySelector('main');
-    main.append(...Object.entries(categories).map(([name, favorites]) => renderCategory({ name, favorites })));
+    // now add the categories to the content div
+    const contentDiv = document.getElementById('content');
+    contentDiv.append(...Object.entries(categories).map(([name, favorites]) => renderCategory({ name, favorites })));
 
     document.getElementById('fontToggleInput').addEventListener('change', function (event) {
       if (event.target.checked) {
@@ -281,17 +281,18 @@
       <img src="img/tea08.gif" />
       <img src="img/teapot03.gif" />
     </div>
+    <div id="content"></div>
+    <footer>
+      <div style="text-align:center; padding-top: 20px; padding-bottom: 20px;">
+        <img src="img/cake.gif" />
+      </div>
+      <small>
+        c. 2024, content: <a href="https://linktr.ee/lucylivin">Lucy Livin</a>, site:
+        <a href="https://maxbo.me">Max Bo</a>, <a href="https://github.com/lucylivin/lucylivin.github.io">source</a>, <a
+          href="https://www.are.na/max-bo/pink-u4nceful5m4">credits</a>
+      </small>
+    </footer>
   </main>
-  <footer>
-    <div style="text-align:center; padding-top: 20px; padding-bottom: 20px;">
-      <img src="img/cake.gif" />
-    </div>
-    <small>
-      c. 2024, content: <a href="https://linktr.ee/lucylivin">Lucy Livin</a>, site:
-      <a href="https://maxbo.me">Max Bo</a>, <a href="https://github.com/lucylivin/lucylivin.github.io">source</a>, <a
-        href="https://www.are.na/max-bo/pink-u4nceful5m4">credits</a>
-    </small>
-  </footer>
 </body>
 <script type="text/csv" id="fallback">Lucy's Faves + Recommendations,,,,,,,,,
 "These are some of my personal favourite products that I use as benchmarks and tend to go back to or just think about a lot lmao. These would be products that I have or would repurchase, and if I were to build out my routine from scratch I would probably be picking from this bunch.",,,,,,,,,
